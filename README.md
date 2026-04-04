@@ -49,5 +49,64 @@ npm run tauri dev
 npm run tauri build
 
 
+🛠️ Commandes Disponibles
 
+Commande	Description
+npm run tauri dev	Lance l'IDE en mode développement avec hot reload
+npm run tauri build	Compile l'application pour votre plateforme
+npm run tauri info	Affiche les informations de configuration Tauri
+npm run lint	Vérifie la qualité du code
+📦 Stack Technique
+
+Composant	Technologie
+Frontend	React 18+
+Éditeur de code	Monaco Editor (VS Code)
+Framework Desktop	Tauri
+Runtime	Rust
+Empaquetage	Tauri Bundle
+🔄 Processus de Release
+
+Les releases sont automatisées via GitHub Actions. Créez simplement un tag :
+
+bash
+git tag v1.0.0
+git push origin v1.0.0
+Le workflow .github/workflows/release.yml :
+
+✅ Crée automatiquement une GitHub Release
+✅ Compile pour Windows (.msi, .exe)
+✅ Compile pour Ubuntu (.deb, AppImage)
+✅ Compile pour macOS (Intel + Apple Silicon)
+✅ Attache les artefacts à la release
+📁 Structure du Projet
+
+Code
+Aether-IDE/
+├── src/                    # Code React frontend
+├── src-tauri/             # Code Rust backend
+│   ├── src/               # Logique Rust
+│   └── tauri.conf.json    # Configuration Tauri
+├── .github/workflows/     # GitHub Actions
+├── package.json           # Dépendances frontend
+└── README.md             # Ce fichier
+🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à :
+
+Fork le repository
+Créer une branche (git checkout -b feature/amazing-feature)
+Commit vos changements (git commit -m 'Add amazing feature')
+Push vers la branche (git push origin feature/amazing-feature)
+Ouvrir une Pull Request
+📝 License
+
+Ce projet est licencié sous la Apache License 2.0.
+
+💬 Support
+
+Vous avez des questions ou besoin d'aide ?
+
+📖 Consultez la documentation Tauri
+🐛 Ouvrez une issue
+💬 Commencez une discussion
 
