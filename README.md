@@ -74,8 +74,9 @@ Les releases sont automatisées via GitHub Actions. Créez simplement un tag :
 
 git tag v1.0.0
 git push origin v1.0.0
-Le workflow .github/workflows/release.yml :
 
+
+Le workflow .github/workflows/release.yml :
 
 ✅ Crée automatiquement une GitHub Release
 ✅ Compile pour Windows (.msi, .exe)
