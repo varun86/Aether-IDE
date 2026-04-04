@@ -1,0 +1,12 @@
+# 1. Cloner le repository
+git clone https://github.com/BarackNdenga/Aether-IDE.git
+cd Aether-IDE
+
+# 2. Installer les dépendances
+npm install
+
+# 3. Lancer l'IDE en mode développement
+npm run tauri dev
+
+# 4. Construire pour la production
+npm run tauri build
