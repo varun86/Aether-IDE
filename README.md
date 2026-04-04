@@ -1,36 +1,29 @@
-# Aether IDE
+# ✨ Aether IDE
 
-Aether IDE is a powerful integrated development environment designed for efficiency and ease of use.
+Un éditeur de code **léger**, **performant** et **cross-platform** construit avec **Tauri**, **React** et **Rust**.
 
-## Features
-- **Intuitive Interface**: A clean and user-friendly interface to enhance productivity.
-- **Cross-Platform Support**: Available on Windows, macOS, and Linux.
-- **Extensive Language Support**: Supports various programming languages including Python, Java, JavaScript, C++, and more.
-- **Built-in Debugger**: Easy-to-use debugger to streamline the development process.
-- **Version Control Integration**: Seamless integration with Git and other version control systems.
-- **Customizable Environment**: Personalize your coding environment with themes and extensions.
+![Tauri](https://img.shields.io/badge/Tauri-FFC131?style=flat-square&logo=tauri&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Rust](https://img.shields.io/badge/Rust-CE422B?style=flat-square&logo=rust&logoColor=white)
+![License](https://img.shields.io/badge/License-Apache%202.0-blue?style=flat-square)
 
-## Installation
-### Windows
-1. Download the installer from the [official website](https://example.com).
-2. Run the installer and follow the on-screen instructions.
+## 🎯 Fonctionnalités Principales
 
-### macOS
-1. Download the DMG file from the [official website](https://example.com).
-2. Drag and drop Aether IDE to your Applications folder.
+- ⚡ **Performance extrême** - Alimenté par Rust pour une vitesse d'exécution optimale
+- 🎨 **Éditeur Monaco** - Le même éditeur que VS Code, avec support complet de la syntaxe
+- 📁 **Gestion native des fichiers** - Accès au système de fichiers avec dialogues natifs
+- 🖥️ **Cross-platform** - Windows, macOS (Intel & Apple Silicon), Linux
+- 🔧 **Intégrations système** - Dialogues natifs, notifications, et plus
+- 💻 **Interface moderne** - UI intuitive construite avec React
+- 🌙 **Mode sombre/clair** - Thèmes adaptés à votre préférence
 
-### Linux
-1. Download the tarball from the [official website](https://example.com).
-2. Extract the tarball and run the executable.
+## 📋 Prérequis
 
-## Development Setup
-1. Clone the repository: `git clone https://github.com/BarackNdenga/Aether-IDE.git`
-2. Navigate to the project directory: `cd Aether-IDE`
-3. Install dependencies: `npm install` or `pip install -r requirements.txt`
-4. Run the application: `npm start` or `python main.py`
+### Système
+- **Node.js** 18+ (recommandé 20+)
+- **Rust** (installé via [rustup](https://rustup.rs/))
+- **npm**, **yarn** ou **pnpm**
 
-## Contributing
-We welcome contributions! Please fork the repository and submit a pull request for any improvements or features you would like to add.
-
-## License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+### Dépendances Linux
+```bash
+sudo apt-get install libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
