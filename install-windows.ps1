@@ -2,7 +2,7 @@
 # Usage: irm https://raw.githubusercontent.com/USERNAME/aether-ide/main/install-windows.ps1 | iex
 
 $ErrorActionPreference = "Stop"
-$REPO = "USERNAME/aether-ide"
+$REPO = "varun86/aether-ide"
 
 Write-Host "Aether IDE - Installation Windows" -ForegroundColor Cyan
 Write-Host ""
