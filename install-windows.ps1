@@ -1,5 +1,5 @@
 # install-windows.ps1 — Aether IDE installer for Windows
-# Usage: irm https://raw.githubusercontent.com/USERNAME/aether-ide/main/install-windows.ps1 | iex
+# Usage: irm https://raw.githubusercontent.com/varun86/aether-ide/main/install-windows.ps1 | iex
 
 $ErrorActionPreference = "Stop"
 $REPO = "varun86/aether-ide"
