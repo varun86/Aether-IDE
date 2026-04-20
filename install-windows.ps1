@@ -1,50 +1,30 @@
-# install-windows.ps1 — Aether IDE installer for Windows
-# Usage: irm https://raw.githubusercontent.com/varun86/aether-ide/main/install-windows.ps1 | iex
+# PowerShell script to install Aether IDE on Windows
 
-$ErrorActionPreference = "Stop"
-$REPO = "varun86/aether-ide"
+# Error handling
+try {
+    # Validate if the necessary prerequisites are met
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+        throw "Git is not installed. Please install Git before running this script."
+    }
+    
+    # Validation of repository name
+    $repoName = "Aether-IDE"
+    # Example: Replace with actual logic to validate the repository
+    if (-not (Test-Path "https://github.com/varun86/$repoName")) {
+        throw "Repository '$repoName' does not exist."
+    }
+    
+    # Downloading the installer
+    Write-Host "Downloading Aether IDE..."
+    Invoke-WebRequest -Uri "https://github.com/varun86/$repoName/releases/latest/download/installer.exe" -OutFile "installer.exe"
 
-Write-Host "Aether IDE - Installation Windows" -ForegroundColor Cyan
-Write-Host ""
-
-# Récupérer la dernière release
-Write-Host "-> Récupération de la dernière version..." -ForegroundColor Gray
-$release = Invoke-RestMethod "https://api.github.com/repos/$REPO/releases/latest"
-$version = $release.tag_name
-Write-Host "OK Version : $version" -ForegroundColor Green
-
-# Trouver l'installeur NSIS (.exe)
-$asset = $release.assets | Where-Object { $_.name -like "*x64-setup.exe" } | Select-Object -First 1
-if (-not $asset) {
-    $asset = $release.assets | Where-Object { $_.name -like "*.exe" } | Select-Object -First 1
+    # Install the application
+    Write-Host "Installing Aether IDE..."
+    Start-Process -FilePath "installer.exe" -ArgumentList '/S' -Wait
+    
+    # Cleanup temporary files
+    Remove-Item -Path "installer.exe" -Force
+    Write-Host "Installation completed. Temporary files removed." 
+} catch {
+    Write-Host "An error occurred: $_.Exception.Message"
 }
-
-if (-not $asset) {
-    Write-Host "ERREUR : Impossible de trouver l'installeur" -ForegroundColor Red
-    Write-Host "Téléchargez manuellement : https://github.com/$REPO/releases/latest"
-    exit 1
-}
-
-$url = $asset.browser_download_url
-$tmpFile = Join-Path $env:TEMP "aether-ide-setup.exe"
-
-# Télécharger
-Write-Host "-> Téléchargement de $($asset.name)..." -ForegroundColor Gray
-Invoke-WebRequest -Uri $url -OutFile $tmpFile -UseBasicParsing
-Write-Host "OK Téléchargé" -ForegroundColor Green
-
-# Débloquer le fichier (contourne SmartScreen pour les fichiers téléchargés)
-Unblock-File -Path $tmpFile
-Write-Host "OK Fichier débloqué" -ForegroundColor Green
-
-# Installer silencieusement
-Write-Host "-> Installation..." -ForegroundColor Gray
-Start-Process -FilePath $tmpFile -ArgumentList "/S" -Wait
-Remove-Item $tmpFile -Force
-
-Write-Host ""
-Write-Host "Aether IDE installé avec succès !" -ForegroundColor Green
-Write-Host "Lance-le depuis le menu Démarrer ou le raccourci Bureau."
-Write-Host ""
-Write-Host "IA locale : winget install Ollama.Ollama" -ForegroundColor Gray
-Write-Host "Debugger Python : pip install debugpy" -ForegroundColor Gray
