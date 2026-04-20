@@ -1,3 +1,4 @@
+# irm https://github.com/varun86/Aether-IDE/blob/main/install-windows.ps1 | iex
 # install-windows.ps1
 
 # Error handling for GitHub API calls
