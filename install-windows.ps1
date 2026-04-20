@@ -1,32 +1,90 @@
-# PowerShell script for installing Aether-IDE on Windows
+# install-windows.ps1
 
-# Function to exit with code
-function Exit-WithCode {
-    param ([int]$code)
-    exit $code
+# Error handling for GitHub API calls
+
+function Invoke-GitHubApiCall {
+    param(
+        [string]$endpoint,
+        [string]$method = "GET",
+        [string]$body = $null
+    )
+
+    $url = "https://api.github.com/$endpoint"
+    $headers = @{ "User-Agent" = "PowerShell" }
+    $response = $null
+
+    try {
+        if ($method -eq "GET") {
+            $response = Invoke-RestMethod -Uri $url -Method GET -Headers $headers
+        } else {
+            $response = Invoke-RestMethod -Uri $url -Method $method -Headers $headers -Body $body
+        }
+    } catch {
+        Write-Error "API call failed: $_"
+        exit 1
+    }
+
+    return $response
 }
 
-# Validate if necessary files are present
-if (-Not (Test-Path "path-to-required-file.txt")) {
-    Write-Error "Required file not found."
-    Exit-WithCode 1
+# File validation
+function Validate-File {
+    param(
+        [string]$filePath
+    )
+
+    if (-Not (Test-Path $filePath)) {
+        Write-Error "File not found: $filePath"
+        exit 1
+    }
 }
 
-# API Call example
-$response = Invoke-RestMethod -Uri "https://api.example.com/install" -Method Post -Body @{param1='value1'; param2='value2'}
-if ($response.StatusCode -ne 200) {
-    Write-Error "API call failed with status: $($response.StatusCode)"
-    Exit-WithCode 2
+# Unblock files if needed
+function Unblock-File {
+    param(
+        [string]$filePath
+    )
+
+    if (Get-Item $filePath | Select-Object -ExpandProperty Attributes -ErrorAction SilentlyContinue -eq "ReadOnly") {
+        Write-Host "Unblocking file: $filePath"
+        Unblock-File -Path $filePath
+    }
 }
 
-# Proceed to install Aether-IDE
-# Your installation commands here
+# Exit code verification
+function Verify-ExitCode {
+    param(
+        [int]$exitCode
+    )
 
-# Check if installation was successful
-if ($LASTEXITCODE -ne 0) {
-    Write-Error "Installation failed." 
-    Exit-WithCode 3
+    if ($exitCode -ne 0) {
+        Write-Error "Process exited with code: $exitCode"
+        exit $exitCode
+    }
 }
 
-Write-Host "Installation completed successfully." 
-Exit-WithCode 0
+# Automatic cleanup on failures
+function Cleanup {
+    param(
+        [string]$tempDir
+    )
+
+    if (Test-Path $tempDir) {
+        Remove-Item -Path $tempDir -Recurse -Force
+        Write-Host "Cleaned up temporary directory: $tempDir"
+    }
+}
+
+# Main script starts here
+$tempDir = "C:\Temp\AetherIDE"
+
+# Validate and unblock files
+Validate-File -filePath "$tempDir\install-windows.ps1"
+Unblock-File -filePath "$tempDir\install-windows.ps1"
+
+# Perform actions, e.g., invoking GitHub API
+$response = Invoke-GitHubApiCall -endpoint "user/repos" -method "GET"
+Verify-ExitCode -exitCode $LASTEXITCODE
+
+# Cleanup on completion
+Cleanup -tempDir $tempDir
