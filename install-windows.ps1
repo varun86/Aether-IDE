@@ -1,30 +1,32 @@
-# PowerShell script to install Aether IDE on Windows
+# PowerShell script for installing Aether-IDE on Windows
 
-# Error handling
-try {
-    # Validate if the necessary prerequisites are met
-    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-        throw "Git is not installed. Please install Git before running this script."
-    }
-    
-    # Validation of repository name
-    $repoName = "Aether-IDE"
-    # Example: Replace with actual logic to validate the repository
-    if (-not (Test-Path "https://github.com/varun86/$repoName")) {
-        throw "Repository '$repoName' does not exist."
-    }
-    
-    # Downloading the installer
-    Write-Host "Downloading Aether IDE..."
-    Invoke-WebRequest -Uri "https://github.com/varun86/$repoName/releases/latest/download/installer.exe" -OutFile "installer.exe"
-
-    # Install the application
-    Write-Host "Installing Aether IDE..."
-    Start-Process -FilePath "installer.exe" -ArgumentList '/S' -Wait
-    
-    # Cleanup temporary files
-    Remove-Item -Path "installer.exe" -Force
-    Write-Host "Installation completed. Temporary files removed." 
-} catch {
-    Write-Host "An error occurred: $_.Exception.Message"
+# Function to exit with code
+function Exit-WithCode {
+    param ([int]$code)
+    exit $code
 }
+
+# Validate if necessary files are present
+if (-Not (Test-Path "path-to-required-file.txt")) {
+    Write-Error "Required file not found."
+    Exit-WithCode 1
+}
+
+# API Call example
+$response = Invoke-RestMethod -Uri "https://api.example.com/install" -Method Post -Body @{param1='value1'; param2='value2'}
+if ($response.StatusCode -ne 200) {
+    Write-Error "API call failed with status: $($response.StatusCode)"
+    Exit-WithCode 2
+}
+
+# Proceed to install Aether-IDE
+# Your installation commands here
+
+# Check if installation was successful
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Installation failed." 
+    Exit-WithCode 3
+}
+
+Write-Host "Installation completed successfully." 
+Exit-WithCode 0
